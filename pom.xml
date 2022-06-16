@@ -59,13 +59,14 @@
             </plugin>
         </plugins>
     </build>
+    <!--
     <distributionManagement>
         <snapshotRepository>
             <id>nexus-snapshots</id>
             <url>http://137.184.72.67:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-
+    -->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
