@@ -1,14 +1,14 @@
 pipeline {
     agent any
     environment {
-        IMAGE_TAG = "1.0"
+        NEW_VERSION = '1.3.0'
+        SERVER_CREDENTIALS = credentials('github-credential')
     }
     stages {
         stage("build") {
             steps {
-                sh """
-                    mvn package
-                """
+                echo "building the app.."
+                echo "building version ${NEW_VERSION}"
             }
         }
         stage("test") {
@@ -19,6 +19,12 @@ pipeline {
         stage("deploy") {
             steps {
                 echo "deploy the app.."
+                echo "deploying with ${SERVER_CREDENTIALS}"
+                withCredentials([
+                    usernamePassword(credentials: 'github-credential', usernameVariable: USER, passwordVariable: PWD)
+                ]) {
+                    sh "some script ${USER} ${PWD}"
+                }
             }
         }  
     }
