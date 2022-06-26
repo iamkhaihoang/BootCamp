@@ -6,7 +6,7 @@ pipeline {
     }
     tools {
         maven 'Maven'
-        java 'java8'
+        jdk 'java8'
     }
     environment {
         NEW_VERSION = '1.3.0'
