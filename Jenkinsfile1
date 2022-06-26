@@ -12,17 +12,12 @@ pipeline {
         NEW_VERSION = '1.3.0'
     }
     stages {
-        stage("init") {
-            steps {
-                script {
-                    gv = load "script.groovy"
-                }
-            }
-        }
         stage("build") {
             steps {
-                script
-                gv.buildApp()
+                echo "building the app.."
+                sh """
+                    mvn package
+                """
             }
         }
         stage("test") {
@@ -32,16 +27,13 @@ pipeline {
                 }
             }
             steps {
-                script {
-                    gv.testApp()
-                }
+                echo "test the app.."
             }
         }
         stage("deploy") {
             steps {
-                script {
-                    gv.deployApp()
-                }
+                echo "deploy the app.."
+                echo "version: ${params.VERSION}"
             }
         }  
     }
