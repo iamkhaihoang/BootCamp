@@ -14,6 +14,9 @@ pipeline {
         stage("build") {
             steps {
                 echo "building the app.."
+                sh """
+                    mvn package
+                """
             }
         }
         stage("test") {
