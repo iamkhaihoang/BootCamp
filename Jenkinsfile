@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        choice(name: 'VERSION', choices: ['1.0', '1.1.', '1.2'], description: '')
+        choice(name: 'VERSION', choices: ['1.0', '1.1', '1.2'], description: '')
         booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
     tools {
@@ -39,9 +39,17 @@ pipeline {
             }
         }
         stage("deploy") {
+            input {
+                message "Select the environment to deploy to:"
+                ok "Done"
+                parameters {
+                    choice(name: 'ENV', choices: ['dev', 'staging', 'production'], description: '')
+                }
+            }
             steps {
                 script {
                     gv.deployApp()
+                    echo "Deploying to ${ENN}"
                 }
             }
         }  
