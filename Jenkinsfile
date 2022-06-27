@@ -1,8 +1,11 @@
 pipeline {
     agent any
+    environment {
+        ENV = "staging" 
+    }
     parameters {
         choice(name: 'VERSION', choices: ['1.0', '1.1', '1.2'], description: '')
-        booleanParam(name: 'executeTests', defaultValue: true, description: '')
+        //booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
     tools {
         maven 'Maven'
@@ -16,7 +19,19 @@ pipeline {
                 }
             }
         }
+        stage("test") {
+            steps {
+                script {
+                    gv.testApp()
+                }
+            }
+        }
         stage("Build jar") {
+            when {
+                expression {
+                    BRANCH_NAME == 'main'
+                }
+            }
             steps {
                 script {
                     gv.buildJar()
@@ -24,6 +39,11 @@ pipeline {
             }
         }
         stage("Build Docker image") {
+            when {
+                expression {
+                    BRANCH_NAME == 'main'
+                }
+            }
             steps {
                 script {
                    gv.buildDockerImage()
@@ -31,19 +51,12 @@ pipeline {
             }
         }
                 
-        stage("test") {
+        stage("deploy") {
             when {
                 expression {
-                    params.executeTests
+                    BRANCH_NAME == 'main'
                 }
             }
-            steps {
-                script {
-                    gv.testApp()
-                }
-            }
-        }
-        stage("deploy") {
             // input {
             //     message "Select the environment to deploy to:"
             //     ok "Done"
@@ -53,7 +66,7 @@ pipeline {
             // }
             steps {
                 script {
-                    env.ENV = input message: "Select the environment to deploy to:", ok:"Done", parameters: [choice(name: 'ENV', choices: ['dev', 'staging', 'production'], description: '')]
+            //        env.ENV = input message: "Select the environment to deploy to:", ok:"Done", parameters: [choice(name: 'ENV', choices: ['dev', 'staging', 'production'], description: '')]
                     gv.deployApp()
                     echo "Deploying to ${ENV}"
                 }
