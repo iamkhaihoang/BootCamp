@@ -9,23 +9,24 @@ pipeline {
         jdk 'java8'
     }
     stages {
+        stage("init") {
+            steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+        }
         stage("Build jar") {
             steps {
                 script {
-                    echo "Building the app..."
-                    sh 'mvn package'
+                    gv.buildJar()
                 }
             }
         }
         stage("Build Docker image") {
             steps {
                 script {
-                    echo "Building the Docker image..."
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh 'docker build -t iamkhaihoang/demo-app:1.0 .'
-                        sh 'echo $PASS | docker login -u $USER --password-stdin'
-                        sh 'docker push iamkhaihoang/demo-app:1.0'
-                    }
+                   gv.buildDockerImage()
                 }
             }
         }
