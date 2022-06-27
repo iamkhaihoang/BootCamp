@@ -8,24 +8,28 @@ pipeline {
         maven 'Maven'
         jdk 'java8'
     }
-    environment {
-        NEW_VERSION = '1.3.0'
-    }
     stages {
-        stage("init") {
+        stage("Build jar") {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    echo "Building the app..."
+                    mvn package
                 }
             }
         }
-        stage("build") {
+        stage("Build Docker image") {
             steps {
                 script {
-                    gv.buildApp()
+                    echo "Building the Docker image..."
+                    withCredentials([usernamePassword(credentialId: 'dockerhub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh 'docker build -t iamkhaihoang/demo-app:1.0 .'
+                        sh 'echo $PASS | docker login -u $USER --password-stdin'
+                        sh 'docker push iamkhaihoang/demo-app:1.0'
+                    }
                 }
             }
         }
+                
         stage("test") {
             when {
                 expression {
