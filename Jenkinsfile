@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     echo "Building the app..."
-                    mvn package
+                    sh 'mvn package'
                 }
             }
         }
