@@ -38,11 +38,11 @@ pipeline {
             }
         }
         stage("Build jar") {
-            when {
-                expression {
-                    // BRANCH_NAME == 'main'
-                }
-            }
+            // when {
+            //     expression {
+            //         BRANCH_NAME == 'main'
+            //     }
+            // }
             steps {
                 script {
                     buildJar()
@@ -50,11 +50,11 @@ pipeline {
             }
         }
         stage("Build and Push Docker image") {
-            when {
-                expression {
-                    // BRANCH_NAME == 'main'
-                }
-            }
+            // when {
+            //     expression {
+            //         BRANCH_NAME == 'main'
+            //     }
+            // }
             steps {
                 script {
                    buildImage 'iamkhaihoang/demo-app:1.0.1'
