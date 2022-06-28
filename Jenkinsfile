@@ -65,11 +65,11 @@ pipeline {
         }
                 
         stage("deploy") {
-            when {
-                expression {
-                    BRANCH_NAME == 'main'
-                }
-            }
+            // when {
+            //     expression {
+            //         BRANCH_NAME == 'main'
+            //     }
+            // }
             // input {
             //     message "Select the environment to deploy to:"
             //     ok "Done"
