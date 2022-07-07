@@ -1,15 +1,15 @@
-def scriptApproval = org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval.get()
+// def scriptApproval = org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval.get()
 
-String[] signs = [
-    "method org.jenkinsci.plugins.workflow.steps.FlowInterruptedException getCauses",
-    "method org.jenkinsci.plugins.workflow.support.steps.input.Rejection getUser"
-    ]
+// String[] signs = [
+//     "method org.jenkinsci.plugins.workflow.steps.FlowInterruptedException getCauses",
+//     "method org.jenkinsci.plugins.workflow.support.steps.input.Rejection getUser"
+//     ]
 
-for( String sign : signs ) {
-    scriptApproval.approveSignature(sign)
-}
+// for( String sign : signs ) {
+//     scriptApproval.approveSignature(sign)
+// }
 
-scriptApproval.save()
+// scriptApproval.save()
 
 def buildJar() {
     echo "building the app.."
