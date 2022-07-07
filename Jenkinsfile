@@ -80,8 +80,12 @@ pipeline {
             steps {
                 script {
             //        env.ENV = input message: "Select the environment to deploy to:", ok:"Done", parameters: [choice(name: 'ENV', choices: ['dev', 'staging', 'production'], description: '')]
-                    gv.deployApp()
-            //        echo "Deploying to ${ENV}"
+                    // gv.deployApp()
+                    // echo "Deploying to ${ENV}"
+                    def dockerCmd = 'docker run -d iamkhaihoang/demo-app:1.0.1'
+                    sshagent(['ec2-server-key']) {
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.139.83.157 ${dockerCmd}"
+                    }
                 }
             }
         }  
