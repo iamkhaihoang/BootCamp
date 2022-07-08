@@ -13,9 +13,11 @@ pipeline {
     agent any
     environment {
         ENV = "staging" 
+        VERSION = "1.0.1"
+        DOCKERHUB_REPO_NAME = "iamkhaihoang/demo-app"
     }
     parameters {
-        choice(name: 'VERSION', choices: ['1.0', '1.1', '1.2'], description: '')
+        //choice(name: 'VERSION', choices: ['1.0', '1.1', '1.2'], description: '')
         //booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
     tools {
@@ -57,9 +59,9 @@ pipeline {
             // }
             steps {
                 script {
-                   buildImage 'iamkhaihoang/demo-app:1.0.1'
+                   buildImage "$DOCKERHUB_REPO_NAME:$VERSION"
                    dockerLogin()
-                   dockerPush 'iamkhaihoang/demo-app:1.0.1'
+                   dockerPush "$DOCKERHUB_REPO_NAME:$VERSION"
                 }
             }
         }
