@@ -16,10 +16,10 @@ pipeline {
         VERSION = "1.0.1"
         DOCKERHUB_REPO_NAME = "iamkhaihoang/demo-app"
     }
-    parameters {
+//    parameters {
         //choice(name: 'VERSION', choices: ['1.0', '1.1', '1.2'], description: '')
         //booleanParam(name: 'executeTests', defaultValue: true, description: '')
-    }
+//    }
     tools {
         maven 'Maven'
         jdk 'java8'
