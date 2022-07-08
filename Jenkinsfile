@@ -81,10 +81,12 @@ pipeline {
                 script {
             //        env.ENV = input message: "Select the environment to deploy to:", ok:"Done", parameters: [choice(name: 'ENV', choices: ['dev', 'staging', 'production'], description: '')]
                     // gv.deployApp()
-                    // echo "Deploying to ${ENV}"
-                    def dockerCmd = 'docker run -d iamkhaihoang/demo-app:1.0.1'
+                    echo "Deploying to EC2..."
+                    //def dockerCmd = 'docker run -d iamkhaihoang/demo-app:1.0.1'
+                    def dockerComposeCmd = "docker-compose -f docker-compose.yaml up --detach"
                     sshagent(['ec2-server-key']) {
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.133.139.199 ${dockerCmd}"
+                        sh "scp docker-compose.yaml ec2-user@3.133.139.199:/home/ec2-user"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@18.222.51.205 ${dockerComposeCmd}"
                     }
                 }
             }
