@@ -88,8 +88,9 @@ pipeline {
                     def dockerComposeCmd = "docker-compose -f docker-compose.yaml up --detach"
                     def EC2_IP = "18.222.51.205"
                     sshagent(['ec2-server-key']) {
-                        sh "scp docker-compose.yaml ec2-user@$EC2_IP:/home/ec2-user"
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP ${dockerComposeCmd}"
+                        sh "ls"
+                        //sh "scp docker-compose.yaml ec2-user@$EC2_IP:/home/ec2-user"
+                        //sh "ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP ${dockerComposeCmd}"
                     }
                 }
             }
