@@ -86,10 +86,10 @@ pipeline {
                     echo "Deploying to EC2..."
                     //def dockerCmd = 'docker run -d iamkhaihoang/demo-app:1.0.1'
                     def dockerComposeCmd = "docker-compose -f docker-compose.yaml up --detach"
-                    def EC2-IP = "18.222.51.205"
+                    def EC2_IP = "18.222.51.205"
                     sshagent(['ec2-server-key']) {
-                        sh "scp docker-compose.yaml ec2-user@EC2-IP$:/home/ec2-user"
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@EC2-IP ${dockerComposeCmd}"
+                        sh "scp docker-compose.yaml ec2-user@EC2_IP$:/home/ec2-user"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@EC2_IP ${dockerComposeCmd}"
                     }
                 }
             }
