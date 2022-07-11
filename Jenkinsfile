@@ -46,11 +46,12 @@ pipeline {
             //         BRANCH_NAME == 'main'
             //     }
             // }
-            // steps {
-            //     script {
-            //         buildJar()
-            //     }
-            // }
+            steps {
+                script {
+                    sh "echo Build jar"
+                    //buildJar()
+                }
+            }
         }
         stage("Build and Push Docker image") {
             // when {
@@ -59,11 +60,12 @@ pipeline {
             //     }
             // }
             steps {
-                // script {
+                script {
+                    sh "Push file"
                 //    buildImage "$DOCKERHUB_REPO_NAME:$VERSION"
                 //    dockerLogin()
                 //    dockerPush "$DOCKERHUB_REPO_NAME:$VERSION"
-                // }
+                }
             }
         }
                 
