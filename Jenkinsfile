@@ -46,11 +46,11 @@ pipeline {
             //         BRANCH_NAME == 'main'
             //     }
             // }
-            steps {
-                script {
-                    buildJar()
-                }
-            }
+            // steps {
+            //     script {
+            //         buildJar()
+            //     }
+            // }
         }
         stage("Build and Push Docker image") {
             // when {
@@ -59,11 +59,11 @@ pipeline {
             //     }
             // }
             steps {
-                script {
-                   buildImage "$DOCKERHUB_REPO_NAME:$VERSION"
-                   dockerLogin()
-                   dockerPush "$DOCKERHUB_REPO_NAME:$VERSION"
-                }
+                // script {
+                //    buildImage "$DOCKERHUB_REPO_NAME:$VERSION"
+                //    dockerLogin()
+                //    dockerPush "$DOCKERHUB_REPO_NAME:$VERSION"
+                // }
             }
         }
                 
@@ -88,7 +88,7 @@ pipeline {
                     //def dockerCmd = 'docker run -d iamkhaihoang/demo-app:1.0.1'
                     def dockerComposeCmd = "docker-compose -f docker-compose.yaml up --detach"
                     sshagent(['ec2-server-key']) {
-                        sh "scp docker-compose.yaml ec2-user@$EC2_IP:/home/ec2-user"
+                        sh "scp docker-compose.yaml ec2-user@$EC2_IP://home/ec2-user"
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP ${dockerComposeCmd}"
                     }
                 }
