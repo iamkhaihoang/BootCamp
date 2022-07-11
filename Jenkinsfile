@@ -48,7 +48,7 @@ pipeline {
             // }
             steps {
                 script {
-                    sh "echo Build jar"
+                    echo "Build jar"
                     //buildJar()
                 }
             }
@@ -61,7 +61,7 @@ pipeline {
             // }
             steps {
                 script {
-                    sh "Push file"
+                    echo "Push file"
                 //    buildImage "$DOCKERHUB_REPO_NAME:$VERSION"
                 //    dockerLogin()
                 //    dockerPush "$DOCKERHUB_REPO_NAME:$VERSION"
